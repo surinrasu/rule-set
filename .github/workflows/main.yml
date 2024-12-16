@@ -5,7 +5,7 @@ on:
     - cron: "0 0 * * *"  # Run daily at 0:00
   workflow_dispatch:    # Allow run manually
 jobs:
-  update-srs:
+  main:
     runs-on: ubuntu-latest
     env:
       GIT_TRACE: 2
@@ -16,6 +16,7 @@ jobs:
       GIT_TRACE_PACKFILE: 2
       GIT_TRACE_SETUP: 2
       GIT_TRACE_SHALLOW: 2
+      GOFLAGS: "-v"
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -99,13 +100,12 @@ jobs:
         env:
           PATH: $HOME/go/bin:$PATH
         run: |
-          sing-box rule-set compile geosite-direct.json -o geosite-direct.srs
-          sing-box rule-set compile geosite-reject.json -o geosite-reject.srs
+          sing-box rule-set compile geosite-direct.json -o ../geosite-direct.srs
+          sing-box rule-set compile geosite-reject.json -o ../geosite-reject.srs
 
       - name: Clean up working directory
+        working-directory: ./configs
         run: |
-          mv -v geosite-direct.srs ../geosite-direct.srs
-          mv -v geosite-reject.srs ../geosite-reject.srs
           mv -v geoip-cn.srs ../geoip-direct.srs
           rm -rvf configs
         
