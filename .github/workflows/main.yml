@@ -6,6 +6,8 @@ on:
   workflow_dispatch:    # Allow run manually
 jobs:
   main:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     env:
       GIT_TRACE: 2
