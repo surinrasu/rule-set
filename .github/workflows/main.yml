@@ -1,4 +1,4 @@
-name: Update SRS files
+name: Generate rule set files
 
 on:
   schedule:
@@ -28,7 +28,7 @@ jobs:
           go-version: '1.21'
       
       - name: Install dependencies
-        run: sudo apt-get update -vvv && sudo apt-get install -y make curl -vvv
+        run: sudo apt-get update && sudo apt-get install -y make curl
       
       - name: Create working directory
         run: mkdir -p configs
@@ -81,7 +81,7 @@ jobs:
         env:
           PATH: $HOME/go/bin:$PATH
         run: |
-          sing-box rule-set merge -c geosite-cn.json -c geosite-private.json -o geosite-direct.json
+          sing-box rule-set merge -c geosite-cn.json -c geosite-private.json geosite-direct.json
           sing-box rule-set merge \
             -c geosite-category-porn.json \
             -c geosite-category-cryptocurrency.json \
@@ -92,7 +92,7 @@ jobs:
             -c geosite-category-game-accelerator-cn.json \
             -c geosite-category-enhance-gaming@cn.json \
             -c geosite-category-novel.json \
-            -o geosite-reject.json
+            geosite-reject.json
             
       - name: Compile rule set files
         working-directory: ./configs
