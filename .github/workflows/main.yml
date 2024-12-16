@@ -111,8 +111,8 @@ jobs:
         
       - name: Commit and push changes
         run: |
-          git config -v user.name "srs-github-actions[bot]"
-          git config -v user.email "actions@srs.surindaku.dev"
+          git config user.name "srs-github-actions[bot]"
+          git config user.email "actions@srs.surindaku.dev"
           git add -v geosite-direct.srs geosite-reject.srs geoip-direct.srs
           git commit -v -m "[CI] Update rule set files regularly"
           git push -v origin master
