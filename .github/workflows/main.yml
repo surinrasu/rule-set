@@ -116,8 +116,8 @@ jobs:
           git config user.name "srs-github-actions[bot]"
           git config user.email "actions@srs.surindaku.dev"
           git add -v geosite-direct.srs geosite-reject.srs geoip-direct.srs
-          git commit -v -m "[CI] Update rule set files regularly"
-          git push -v origin master
+          git diff --cached --quiet || git commit -v -m "[CI] Update rule set files regularly"
+          git diff --cached --quiet || git push -v origin master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
